@@ -6,3 +6,5 @@ Uncouple layers implementations.
 
 SRP: Classes, helpers, etc doint just one thing
 ISP: Interfaces doing just one thing
+
+Infra criptography: Adapter implementing interface

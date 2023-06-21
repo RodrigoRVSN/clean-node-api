@@ -10,7 +10,8 @@ const config: Config.InitialOptions = {
   testMatch: ['**/*.spec.ts'],
   transform: {
     '.+\\.ts$': 'ts-jest'
-  }
+  },
+  preset: '@shelf/jest-mongodb'
 }
 
 export default config
