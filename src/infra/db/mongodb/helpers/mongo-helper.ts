@@ -1,6 +1,4 @@
 import { type Collection, MongoClient, type InsertOneResult } from 'mongodb'
-import { type AccountModel } from '../../../../domain/models/account'
-import { type AddAccountModel } from '../../../../domain/usecases/add-account'
 
 export const MongoHelper = {
   client: null as unknown as MongoClient,
@@ -17,7 +15,7 @@ export const MongoHelper = {
     return this.client.db().collection(name)
   },
 
-  map (accountData: AddAccountModel, result: InsertOneResult<Document>): AccountModel {
+  map<T,>(accountData: T, result: InsertOneResult<Document>): T & { id: string } {
     return { ...accountData, id: result.insertedId.toHexString() }
   }
 }
