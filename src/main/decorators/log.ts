@@ -1,0 +1,13 @@
+import { type HttpRequest, type Controller, type HttpResponse } from '../../presentations/protocols'
+
+export class LogControllerDecorator implements Controller {
+  private readonly controller: Controller
+
+  constructor (controller: Controller) {
+    this.controller = controller
+  }
+
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+    return await this.controller.handle(httpRequest)
+  }
+}
