@@ -27,3 +27,6 @@ Infra criptography: Adapter implementing interface
   s = !git status -s  
   c = !git add --all && git commit -m
   l = !git log --pretty=format:'%C(blue)%h %C(red)%d%C(white)%s - %C(green)%cn, %cr'
+
+Hasher -> Irreversible
+KDF (salt): generate a new hash to be safer, the trade off is the decreased velocity generating the hashed password
