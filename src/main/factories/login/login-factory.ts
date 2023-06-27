@@ -12,7 +12,7 @@ export const makeLoginController = (): Controller => {
   const salt = 12
 
   const bcryptAdapter = new BcryptAdapter(salt)
-  const jwtAdapter = new JwtAdapter(env.jwtSecret)
+  const jwtAdapter = new JwtAdapter(process.env.JWT_SECRET ?? 'supersecret')
   const accountMongoRepository = new AccountMongoRepository()
 
   const dbAddAccount = new DbAuthentication(accountMongoRepository, bcryptAdapter, jwtAdapter, accountMongoRepository)
