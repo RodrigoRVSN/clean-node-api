@@ -1,4 +1,3 @@
-
 import { Router, type Express } from 'express'
 import { readdirSync } from 'fs'
 import { join } from 'path'
