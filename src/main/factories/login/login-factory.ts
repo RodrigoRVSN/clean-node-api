@@ -5,6 +5,7 @@ import { AccountMongoRepository } from '../../../infra/db/mongodb/account/accoun
 import { LogMongoRepository } from '../../../infra/db/mongodb/log/log-mongo-repository'
 import { LoginController } from '../../../presentations/controllers/login/login-controller'
 import { type Controller } from '../../../presentations/protocols'
+import { env } from '../../config/env'
 import { LogControllerDecorator } from '../../decorators/log/log-controller-decorator'
 import { makeLoginValidation } from './login-validation-factory'
 
@@ -12,7 +13,7 @@ export const makeLoginController = (): Controller => {
   const salt = 12
 
   const bcryptAdapter = new BcryptAdapter(salt)
-  const jwtAdapter = new JwtAdapter(process.env.JWT_SECRET ?? 'supersecret')
+  const jwtAdapter = new JwtAdapter(env.jwtSecret)
   const accountMongoRepository = new AccountMongoRepository()
 
   const dbAddAccount = new DbAuthentication(accountMongoRepository, bcryptAdapter, jwtAdapter, accountMongoRepository)
