@@ -7,5 +7,5 @@ export type AddAccountModel = {
 }
 
 export type AddAccount = {
-  add: (email: AddAccountModel) => Promise<AccountModel>
+  add: (email: AddAccountModel) => Promise<AccountModel | null>
 }
