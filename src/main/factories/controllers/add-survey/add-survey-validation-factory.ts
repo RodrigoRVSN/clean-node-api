@@ -1,4 +1,4 @@
-import { type Validation } from '../../../../presentations/protocols/validation'
+import { type Validation } from '../../../../presentation/protocols/validation'
 import { RequiredFieldValidation, ValidationComposite } from '../../../../validation/validators'
 
 export const makeAddSurveyValidation = (): ValidationComposite => {

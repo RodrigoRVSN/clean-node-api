@@ -1,6 +1,6 @@
 
 import { ValidationComposite, RequiredFieldValidation } from '../../../../validation/validators'
-import { type Validation } from '../../../../presentations/protocols/validation'
+import { type Validation } from '../../../../presentation/protocols/validation'
 import { makeAddSurveyValidation } from './add-survey-validation-factory'
 
 jest.mock('../../../../validation/validators/validation-composite')
