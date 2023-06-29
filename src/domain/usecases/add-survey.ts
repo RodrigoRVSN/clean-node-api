@@ -4,7 +4,7 @@ export type AddSurveyModel = {
 }
 
 export type SurveyAnswer = {
-  image: string
+  image?: string
   answer: string
 }
 
