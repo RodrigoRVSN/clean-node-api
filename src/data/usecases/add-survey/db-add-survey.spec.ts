@@ -10,10 +10,14 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
   }]
 })
 
-class AddSurveyRepositoryStub implements AddSurveyRepository {
-  async add (accountData: AddSurveyModel): Promise<void> {
-    await new Promise(resolve => { resolve(null) })
+const makeAddSurveyRepository = (): AddSurveyRepository => {
+  class AddSurveyRepositoryStub implements AddSurveyRepository {
+    async add (accountData: AddSurveyModel): Promise<void> {
+      await new Promise(resolve => { resolve(null) })
+    }
   }
+
+  return new AddSurveyRepositoryStub()
 }
 
 type SutTypes = {
@@ -22,7 +26,7 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const addSurveyRepositoryStub = new AddSurveyRepositoryStub()
+  const addSurveyRepositoryStub = makeAddSurveyRepository()
   const sut = new DbAddSurvey(addSurveyRepositoryStub)
 
   return { sut, addSurveyRepositoryStub }
