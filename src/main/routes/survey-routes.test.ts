@@ -8,6 +8,23 @@ import { sign } from 'jsonwebtoken'
 let surveyCollection: Collection
 let accountCollection: Collection
 
+const makeAccessToken = async (): Promise<string> => {
+  const { insertedId: id } = await accountCollection.insertOne({
+    name: 'Rodrigo',
+    email: 'rodrigo@mail.com',
+    password: '123',
+    role: 'admin'
+  })
+
+  const accessToken = sign({ id }, env.jwtSecret)
+
+  await accountCollection.updateOne({ _id: id }, {
+    $set: { accessToken }
+  })
+
+  return accessToken
+}
+
 describe('Login Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(String(env.mongoUrl))
@@ -36,18 +53,7 @@ describe('Login Routes', () => {
     })
 
     it('should return 204 on add survey with valid accessToken', async () => {
-      const { insertedId: id } = await accountCollection.insertOne({
-        name: 'Rodrigo',
-        email: 'rodrigo@mail.com',
-        password: '123',
-        role: 'admin'
-      })
-
-      const accessToken = sign({ id }, env.jwtSecret)
-
-      await accountCollection.updateOne({ _id: id }, {
-        $set: { accessToken }
-      })
+      const accessToken = await makeAccessToken()
 
       await request(app)
         .post('/api/surveys')
@@ -69,6 +75,15 @@ describe('Login Routes', () => {
           answers: [{ image: 'any_image', answer: 'any_answer' }, { answer: 'other_answer' }]
         })
         .expect(403)
+    })
+
+    it('should return 200 on list all surveys without token', async () => {
+      const accessToken = await makeAccessToken()
+
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+        .expect(204)
     })
   })
 })
