@@ -5,7 +5,8 @@ import { type HttpRequest, type HttpResponse, type Middleware } from '../protoco
 
 export class AuthMiddleware implements Middleware {
   constructor (
-    private readonly loadAccountByToken: LoadAccountByToken
+    private readonly loadAccountByToken: LoadAccountByToken,
+    private readonly role?: string
   ) { }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -13,7 +14,7 @@ export class AuthMiddleware implements Middleware {
       const accessToken = httpRequest.headers?.['x-access-token']
       if (!accessToken) return forbidden(new AccessDeniedError())
 
-      const account = await this.loadAccountByToken.load(accessToken)
+      const account = await this.loadAccountByToken.load(accessToken, this.role)
       if (!account) return forbidden(new AccessDeniedError())
 
       return ok({ accountId: account.id })
