@@ -1,4 +1,4 @@
-import { ok, serverError } from '../../../helpers/http/http-helpers'
+import { noContent, ok, serverError } from '../../../helpers/http/http-helpers'
 import { LoadSurveyController } from './load-surveys-controller'
 import { type SurveyModel, type LoadSurveys } from './load-surveys-controller-protocols'
 import MockDate from 'mockdate'
@@ -62,5 +62,13 @@ describe('LoadSurveys Controller', () => {
 
     const httpResponse = await sut.handle()
     expect(httpResponse).toEqual(ok(makeFakeSurveys()))
+  })
+
+  it('should return 204 when LoadSurveys succeeds without content', async () => {
+    const { sut, loadSurveyStub } = createSut()
+
+    jest.spyOn(loadSurveyStub, 'load').mockResolvedValueOnce([])
+    const httpResponse = await sut.handle()
+    expect(httpResponse).toEqual(noContent())
   })
 })
