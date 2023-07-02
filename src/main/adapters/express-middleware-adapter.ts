@@ -11,6 +11,7 @@ export const adaptMiddleware = (controller: Controller) => {
     if (httpResponse.statusCode === 200) {
       Object.assign(req, httpResponse.body)
       next()
+      return
     }
 
     return res.status(httpResponse.statusCode).json({
