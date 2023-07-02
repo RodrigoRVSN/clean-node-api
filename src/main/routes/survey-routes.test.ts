@@ -59,4 +59,16 @@ describe('Login Routes', () => {
         .expect(204)
     })
   })
+
+  describe('GET /surveys', () => {
+    it('should return 403 on list all surveys without token', async () => {
+      await request(app)
+        .get('/api/surveys')
+        .send({
+          question: 'any_question',
+          answers: [{ image: 'any_image', answer: 'any_answer' }, { answer: 'other_answer' }]
+        })
+        .expect(403)
+    })
+  })
 })
