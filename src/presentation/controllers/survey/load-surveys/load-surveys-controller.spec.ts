@@ -1,5 +1,5 @@
 import { noContent, ok, serverError } from '../../../helpers/http/http-helpers'
-import { LoadSurveyController } from './load-surveys-controller'
+import { LoadSurveysController } from './load-surveys-controller'
 import { type SurveyModel, type LoadSurveys } from './load-surveys-controller-protocols'
 import MockDate from 'mockdate'
 
@@ -25,13 +25,13 @@ const makeLoadSurveys = (): LoadSurveys => {
 }
 
 type SutTypes = {
-  sut: LoadSurveyController
+  sut: LoadSurveysController
   loadSurveyStub: LoadSurveys
 }
 
 const createSut = (): SutTypes => {
   const loadSurveyStub = makeLoadSurveys()
-  const sut = new LoadSurveyController(loadSurveyStub)
+  const sut = new LoadSurveysController(loadSurveyStub)
 
   return { sut, loadSurveyStub }
 }
