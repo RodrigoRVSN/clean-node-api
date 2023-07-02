@@ -15,6 +15,7 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.ts",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
+    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -32,6 +33,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",
     "bcrypt": "^5.1.0",
+    "coveralls": "^3.1.1",
     "eslint": "^8.42.0",
     "eslint-config-standard-with-typescript": "^35.0.0",
     "eslint-plugin-import": "^2.27.5",
