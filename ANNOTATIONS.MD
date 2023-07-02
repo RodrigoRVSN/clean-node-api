@@ -30,3 +30,5 @@ Infra criptography: Adapter implementing interface
 
 Hasher -> Irreversible
 KDF (salt): generate a new hash to be safer, the trade off is the decreased velocity generating the hashed password
+
+Proxy -> Filter that will intercept a request and validate if the condition is valid. Example: Middleware
