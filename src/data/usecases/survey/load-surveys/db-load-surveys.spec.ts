@@ -1,6 +1,6 @@
-import { type SurveyModel } from '../../../../domain/models/survey'
-import { type LoadSurveysRepository } from '../../../protocols/db/survey/load-surveys-repository'
+import { type LoadSurveysRepository, type SurveyModel } from './db-load-surveys.protocols'
 import { DbLoadSurveys } from './db-load-surveys'
+import MockDate from 'mockdate'
 
 const makeFakeSurveys = (): SurveyModel[] => ([{
   id: 'other_id',
@@ -37,6 +37,10 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadSurveys', () => {
+  beforeAll(() => { MockDate.set(new Date()) })
+
+  afterAll(() => { MockDate.reset() })
+
   it('should call LoadSurveyRepository', async () => {
     const { sut, loadSurveyRepositoryStub } = makeSut()
 
