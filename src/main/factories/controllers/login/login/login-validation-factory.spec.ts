@@ -4,7 +4,7 @@ import { type Validation } from '@/presentation/protocols/validation'
 import { makeLoginValidation } from './login-validation-factory'
 import { type EmailValidator } from '@/validation/protocols/email-validator'
 
-jest.mock('../../../../../validation/validators/validation-composite')
+jest.mock('@/validation/validators/validation-composite.ts')
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
