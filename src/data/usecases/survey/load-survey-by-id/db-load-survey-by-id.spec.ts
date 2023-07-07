@@ -2,7 +2,7 @@ import MockDate from 'mockdate'
 import { type SurveyModel, type LoadSurveyByIdRepository } from './db-load-survey-by-id-protocols'
 import { DbLoadSurveyById } from './db-load-survey-by-id'
 
-const makeFakeSurveys = (): SurveyModel => ({
+const makeFakeSurvey = (): SurveyModel => ({
   id: 'other_id',
   question: 'any_question',
   answers: [{ image: 'any_image', answer: 'any_answer' }],
@@ -12,7 +12,7 @@ const makeFakeSurveys = (): SurveyModel => ({
 const makeLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
     async loadById (id: string): Promise<SurveyModel> {
-      return await new Promise(resolve => { resolve(makeFakeSurveys()) })
+      return await new Promise(resolve => { resolve(makeFakeSurvey()) })
     }
   }
 
@@ -48,7 +48,7 @@ describe('DbLoadSurveyById', () => {
     const { sut } = makeSut()
 
     const survey = await sut.loadById('any_id')
-    expect(survey).toEqual(makeFakeSurveys())
+    expect(survey).toEqual(makeFakeSurvey())
   })
 
   it('should throw a error if LoadSurveyByIdRepository throws', async () => {
