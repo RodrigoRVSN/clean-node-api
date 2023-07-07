@@ -75,7 +75,7 @@ describe('SignUp Controller', () => {
     expect(httpResponse).toEqual(serverError(new ServerError('')))
   })
 
-  it('should return 500 if EmailValidator throws an Error', async () => {
+  it('should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut()
 
     const addSpy = jest.spyOn(addAccountStub, 'add')
