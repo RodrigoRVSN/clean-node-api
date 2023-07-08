@@ -6,7 +6,7 @@ import { type Hasher } from '../protocols/criptography/hasher'
 export const makeDecrypter = (): Decrypter => {
   class DecrypterStub implements Decrypter {
     async decrypt (value: string): Promise<string> {
-      return await new Promise(resolve => { resolve('any_value') })
+      return await Promise.resolve('any_value')
     }
   }
 
