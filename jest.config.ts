@@ -7,7 +7,8 @@ const config: Config.InitialOptions = {
   coverageProvider: 'v8',
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    '!<rootDir>/src/main/**'
+    '!<rootDir>/src/main/**',
+    '!**/_test/**'
   ],
   testEnvironment: 'node',
   preset: '@shelf/jest-mongodb',

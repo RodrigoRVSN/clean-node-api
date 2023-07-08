@@ -1,38 +1,9 @@
-import { type Hasher, type AddAccountParams, type AccountModel, type AddAccountRepository } from './db-add-account-protocols'
+import { type Hasher, type AddAccountRepository } from './db-add-account-protocols'
 import { DbAddAccount } from './db-add-account'
 import { type LoadAccountByEmailRepository } from '../authentication/db-authentication-protocols'
 import { mockAccountModel, mockAddAccountParams } from '@/domain/_test'
 import { throwError } from '@/domain/_test/test-helper'
-
-const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
-  class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
-    async loadByEmail (email: string): Promise<AccountModel | null> {
-      return await new Promise(resolve => { resolve(null) })
-    }
-  }
-
-  return new LoadAccountByEmailRepositoryStub()
-}
-
-const makeHasher = (): Hasher => {
-  class HasherStub implements Hasher {
-    async encrypt (value: string): Promise<string> {
-      return await new Promise(resolve => { resolve('hashed_password') })
-    }
-  }
-
-  return new HasherStub()
-}
-
-const makeAddAccountRepository = (): AddAccountRepository => {
-  class AddAccountRepositoryStub implements AddAccountRepository {
-    async add (accountData: AddAccountParams): Promise<AccountModel> {
-      return await new Promise(resolve => { resolve(mockAccountModel()) })
-    }
-  }
-
-  return new AddAccountRepositoryStub()
-}
+import { mockAddAccountRepository, makeHasher, mockLoadAccountByEmailRepository } from '@/data/_test'
 
 type SutTypes = {
   sut: DbAddAccount
@@ -42,9 +13,11 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepository()
+  const loadAccountByEmailRepositoryStub = mockLoadAccountByEmailRepository()
+  jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValue(new Promise(resolve => { resolve(null) }))
+
   const hasherStub = makeHasher()
-  const addAccountRepositoryStub = makeAddAccountRepository()
+  const addAccountRepositoryStub = mockAddAccountRepository()
 
   const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub, loadAccountByEmailRepositoryStub)
 
