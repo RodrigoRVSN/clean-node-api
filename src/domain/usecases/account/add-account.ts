@@ -1,11 +1,7 @@
 import { type AccountModel } from '../../models/account'
 
-export type AddAccountModel = {
-  name: string
-  email: string
-  password: string
-}
+export type AddAccountParams = Omit<AccountModel, 'id'>
 
 export type AddAccount = {
-  add: (email: AddAccountModel) => Promise<AccountModel | null>
+  add: (email: AddAccountParams) => Promise<AccountModel | null>
 }

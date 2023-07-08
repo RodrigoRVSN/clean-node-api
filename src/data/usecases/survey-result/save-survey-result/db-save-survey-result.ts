@@ -1,9 +1,9 @@
-import { type SaveSurveyResultRepository, type SaveSurveyResultModel, type SurveyResultModel, type SaveSurveyResult } from './db-save-survey-result.spec-protocols'
+import { type SaveSurveyResultRepository, type SaveSurveyResultParams, type SurveyResultModel, type SaveSurveyResult } from './db-save-survey-result.spec-protocols'
 
 export class DbSaveSurveyResult implements SaveSurveyResult {
-  constructor (private readonly saveSurveyResultRepository: SaveSurveyResultRepository) {}
+  constructor (private readonly saveSurveyResultRepository: SaveSurveyResultRepository) { }
 
-  async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+  async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     const survey = await this.saveSurveyResultRepository.save(data)
     return survey
   }
