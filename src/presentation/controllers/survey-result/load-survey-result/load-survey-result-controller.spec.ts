@@ -5,6 +5,7 @@ import { mockLoadSurveyById, mockLoadSurveyResult } from '@/presentation/_test'
 import { InvalidParamError } from '@/presentation/errors'
 import { throwError } from '@/domain/_test/test-helper'
 import { mockSurveyResultModel } from '@/domain/_test'
+import MockDate from 'mockdate'
 
 const mockRequest = (): HttpRequest => ({
   params: {
@@ -27,6 +28,10 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadSurveyResult Controller', () => {
+  beforeAll(() => { MockDate.set(new Date()) })
+
+  afterAll(() => { MockDate.reset() })
+
   it('should call LoadSurveyById with correct values', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
 

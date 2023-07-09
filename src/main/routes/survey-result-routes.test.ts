@@ -78,7 +78,7 @@ describe('Login Routes', () => {
         .expect(403)
     })
 
-    it.skip('should return 204 on add survey valid accessToken', async () => {
+    it('should return 200 on add survey valid accessToken', async () => {
       const { insertedId } = await surveyCollection.insertOne({
         question: 'any_question',
         answers: [{ image: 'any_image', answer: 'Answer 1' }],
