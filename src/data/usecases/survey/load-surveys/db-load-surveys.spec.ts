@@ -1,4 +1,4 @@
-import { type LoadSurveysRepository } from './db-load-surveys.protocols'
+import { type LoadSurveysRepository } from './db-load-surveys-protocols'
 import { DbLoadSurveys } from './db-load-surveys'
 import MockDate from 'mockdate'
 import { throwError } from '@/domain/_test/test-helper'

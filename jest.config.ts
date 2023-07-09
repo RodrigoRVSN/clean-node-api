@@ -8,7 +8,10 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/main/**',
-    '!**/_test/**'
+    '!<rootDir>/src/**/*-protocols.ts',
+    '!**/protocols/**',
+    '!**/_test/**',
+    '!**/domain/**',
   ],
   testEnvironment: 'node',
   preset: '@shelf/jest-mongodb',
