@@ -1,16 +1,41 @@
-# Clean architecture
+## Clean architecture
 
-Uncouple layers implementations.
+- Uncouple layers implementations.
+- Adapters to implement a feature that will be uncoupled from the method/library/framework.
+- **Presentation** layer to create Controllers to return something to the user.
+- **Domain** layer to create interfaces from business rules to being implemented.
+- **Data** layer to implement the Domain interfaces to implement the adapters.
+- **Infra** layer to implement interfaces for libraries/frameworks.
 
-[Test Doubles](https://martinfowler.com/bliki/TestDouble.html)
+## Tests
 
-SRP: Classes, helpers, etc doint just one thing
-ISP: Interfaces doing just one thing
+- [Test Doubles](https://martinfowler.com/bliki/TestDouble.html).
+- **TDD**: Make the test before the implementation itself, considering the business rules.
 
-Infra criptography: Adapter implementing interface
+## SOLID
 
-`git config --global --edit`
+- **SRP**: Classes, helpers, etc doint just one thing
+- **ISP**: Interfaces doing just one thing
 
+
+## Criptography
+
+- **Hasher**: Irreversible
+- **KDF** (salt): generate a new hash to be safer, the trade off is the decreased velocity generating the hashed password
+
+## Design patterns
+
+- Proxy: filter that will intercept a request and validate if the condition is valid. Example: Middlewares
+- Factory: a method that build something. Example: sut creators
+
+
+## Git alias
+
+```bash
+git config --global --edit
+```
+
+```bash
 [user]
 	email = rodrigovictor81@gmail.com
 	name = rodrigorvsn
@@ -27,8 +52,4 @@ Infra criptography: Adapter implementing interface
   s = !git status -s  
   c = !git add --all && git commit -m
   l = !git log --pretty=format:'%C(blue)%h %C(red)%d%C(white)%s - %C(green)%cn, %cr'
-
-Hasher -> Irreversible
-KDF (salt): generate a new hash to be safer, the trade off is the decreased velocity generating the hashed password
-
-Proxy -> Filter that will intercept a request and validate if the condition is valid. Example: Middleware
+```
