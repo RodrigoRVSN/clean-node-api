@@ -6,7 +6,7 @@ import { InvalidParamError } from '@/presentation/errors'
 import { throwError } from '@/domain/_test/test-helper'
 import { mockSurveyResultModel } from '@/domain/_test'
 
-const makeFakeRequest = (): HttpRequest => ({
+const mockRequest = (): HttpRequest => ({
   params: {
     surveyId: 'any_id'
   }
@@ -31,7 +31,7 @@ describe('LoadSurveyResult Controller', () => {
     const { sut, loadSurveyByIdStub } = makeSut()
 
     const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById')
-    await sut.handle(makeFakeRequest())
+    await sut.handle(mockRequest())
     expect(loadByIdSpy).toHaveBeenCalledWith('any_id')
   })
 
@@ -39,7 +39,7 @@ describe('LoadSurveyResult Controller', () => {
     const { sut, loadSurveyByIdStub } = makeSut()
 
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
-    const httpRequest = await sut.handle(makeFakeRequest())
+    const httpRequest = await sut.handle(mockRequest())
     expect(httpRequest).toEqual(forbidden(new InvalidParamError('surveyId')))
   })
 
@@ -47,7 +47,7 @@ describe('LoadSurveyResult Controller', () => {
     const { sut, loadSurveyByIdStub } = makeSut()
 
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementation(throwError)
-    const httpRequest = await sut.handle(makeFakeRequest())
+    const httpRequest = await sut.handle(mockRequest())
     expect(httpRequest).toEqual(serverError(new Error()))
   })
 
@@ -55,7 +55,7 @@ describe('LoadSurveyResult Controller', () => {
     const { sut, loadSurveyResultStub } = makeSut()
 
     const loadSpy = jest.spyOn(loadSurveyResultStub, 'load')
-    await sut.handle(makeFakeRequest())
+    await sut.handle(mockRequest())
     expect(loadSpy).toHaveBeenCalledWith('any_id')
   })
 
@@ -63,14 +63,14 @@ describe('LoadSurveyResult Controller', () => {
     const { sut, loadSurveyResultStub } = makeSut()
 
     jest.spyOn(loadSurveyResultStub, 'load').mockImplementation(throwError)
-    const httpRequest = await sut.handle(makeFakeRequest())
+    const httpRequest = await sut.handle(mockRequest())
     expect(httpRequest).toEqual(serverError(new Error()))
   })
 
   it('should return 200 on success', async () => {
     const { sut } = makeSut()
 
-    const httpRequest = await sut.handle(makeFakeRequest())
+    const httpRequest = await sut.handle(mockRequest())
     expect(httpRequest).toEqual(ok(mockSurveyResultModel()))
   })
 })
