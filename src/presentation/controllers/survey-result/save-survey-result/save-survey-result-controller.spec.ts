@@ -1,19 +1,15 @@
 
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helpers'
 import { SaveSurveyResultController } from './save-survey-result-controller'
-import { type LoadSurveyById, type HttpRequest, type SaveSurveyResult } from './save-survey-result-controller-protocols'
+import { type LoadSurveyById, type SaveSurveyResult } from './save-survey-result-controller-protocols'
 import { InvalidParamError, ServerError } from '@/presentation/errors'
 import MockDate from 'mockdate'
 import { mockSurveyResultModel } from '@/domain/_test'
 import { mockLoadSurveyById, mockSaveSurveyResult } from '@/presentation/_test'
 
-const mockRequest = (): HttpRequest => ({
-  params: {
-    surveyId: 'any_survey_id'
-  },
-  body: {
-    answer: 'any_answer'
-  },
+const mockRequest = (): SaveSurveyResultController.Request => ({
+  surveyId: 'any_survey_id',
+  answer: 'any_answer',
   accountId: 'any_account_id'
 })
 
@@ -64,7 +60,7 @@ describe('SaveSurveyResult Controller', () => {
 
     const httpResponse = await sut.handle({
       ...mockRequest(),
-      body: { answer: 'wrong_answer' }
+      answer: 'wrong_answer'
     })
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('answer')))
   })

@@ -1,14 +1,12 @@
 import { badRequest, ok, serverError, unauthorized } from '../../../helpers/http/http-helpers'
-import { type Authentication, type HttpRequest, type Validation } from './login-controller-protocols'
+import { type Authentication, type Validation } from './login-controller-protocols'
 import { LoginController } from './login-controller'
 import { mockValidation } from '@/validation/_test'
 import { mockAuthentication } from '@/presentation/_test'
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    email: 'any_email@mail.com',
-    password: 'any_password'
-  }
+const mockRequest = (): LoginController.Request => ({
+  email: 'any_email@mail.com',
+  password: 'any_password'
 })
 
 type SutTypes = {

@@ -1,6 +1,6 @@
 import { AccessDeniedError } from '../errors'
 import { forbidden, ok, serverError } from '../helpers/http/http-helpers'
-import { type HttpRequest, type HttpResponse, type Middleware, type LoadAccountByToken } from './auth-middleware-protocols'
+import { type HttpResponse, type Middleware, type LoadAccountByToken } from './auth-middleware-protocols'
 
 export class AuthMiddleware implements Middleware {
   constructor (
@@ -8,9 +8,8 @@ export class AuthMiddleware implements Middleware {
     private readonly role?: string
   ) { }
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle ({ accessToken }: AuthMiddleware.Request): Promise<HttpResponse> {
     try {
-      const accessToken = httpRequest.headers?.['x-access-token']
       if (!accessToken) return forbidden(new AccessDeniedError())
 
       const account = await this.loadAccountByToken.load(accessToken, this.role)
@@ -20,5 +19,11 @@ export class AuthMiddleware implements Middleware {
     } catch (error) {
       return serverError(error as Error)
     }
+  }
+}
+
+export namespace AuthMiddleware {
+  export type Request = {
+    accessToken?: string
   }
 }

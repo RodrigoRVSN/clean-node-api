@@ -1,4 +1,4 @@
-import { type AddSurvey, type HttpRequest, type Validation } from './add-survey-controller-protocols'
+import { type AddSurvey, type Validation } from './add-survey-controller-protocols'
 import { AddSurveyController } from './add-survey-controller'
 import { badRequest, noContent, serverError } from '../../../helpers/http/http-helpers'
 import MockDate from 'mockdate'
@@ -6,15 +6,12 @@ import { throwError } from '@/domain/_test/test-helper'
 import { mockValidation } from '@/validation/_test'
 import { mockAddSurvey } from '@/presentation/_test'
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    question: 'any_question',
-    answers: [{
-      image: 'any_image',
-      answer: 'any_answer'
-    }],
-    date: new Date()
-  }
+const mockRequest = (): AddSurveyController.Request => ({
+  question: 'any_question',
+  answers: [{
+    image: 'any_image',
+    answer: 'any_answer'
+  }]
 })
 
 type SutTypes = {
@@ -41,8 +38,9 @@ describe('AddSurvey', () => {
 
     const validateSpy = jest.spyOn(validationStub, 'validate')
 
-    await sut.handle(mockRequest())
-    expect(validateSpy).toHaveBeenCalledWith(mockRequest().body)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(validateSpy).toHaveBeenCalledWith(request)
   })
 
   it('should return 400 if Validation fails', async () => {
@@ -57,19 +55,10 @@ describe('AddSurvey', () => {
   it('should call AddSurvey with correct values', async () => {
     const { sut, addSurveyStub } = makeSut()
 
-    const validateSpy = jest.spyOn(addSurveyStub, 'add')
+    const addSurveySpy = jest.spyOn(addSurveyStub, 'add')
 
     await sut.handle(mockRequest())
-    expect(validateSpy).toHaveBeenCalledWith(mockRequest().body)
-  })
-
-  it('should call AddSurvey with correct values', async () => {
-    const { sut, addSurveyStub } = makeSut()
-
-    const validateSpy = jest.spyOn(addSurveyStub, 'add')
-
-    await sut.handle(mockRequest())
-    expect(validateSpy).toHaveBeenCalledWith(mockRequest().body)
+    expect(addSurveySpy).toHaveBeenCalledWith({ ...mockRequest(), date: new Date() })
   })
 
   it('should return 500 if AddSurvey throws', async () => {

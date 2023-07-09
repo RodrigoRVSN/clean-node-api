@@ -2,12 +2,10 @@ import { mockAccountModel } from '@/domain/_test'
 import { AccessDeniedError } from '../errors'
 import { forbidden, ok, serverError } from '../helpers/http/http-helpers'
 import { AuthMiddleware } from './auth-middleware'
-import { type HttpRequest, type LoadAccountByToken, type AccountModel } from './auth-middleware-protocols'
+import { type LoadAccountByToken, type AccountModel } from './auth-middleware-protocols'
 
-const mockRequest = (): HttpRequest => ({
-  headers: {
-    'x-access-token': 'any_token'
-  }
+const mockRequest = (): AuthMiddleware.Request => ({
+  accessToken: 'any_token'
 })
 
 const makeLoadAccountByToken = (): LoadAccountByToken => {

@@ -1,17 +1,15 @@
 import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
 import { badRequest, forbidden, ok, serverError } from '../../../helpers/http/http-helpers'
 import { SignUpController } from './signup-controller'
-import { type AddAccount, type HttpRequest, type Validation, type Authentication } from './signup-controller-protocols'
+import { type AddAccount, type Validation, type Authentication } from './signup-controller-protocols'
 import { mockValidation } from '@/validation/_test'
 import { mockAddAccount, mockAuthentication } from '@/presentation/_test'
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    name: 'John Doe',
-    email: 'any_email@mail.com',
-    password: 'any_password',
-    passwordConfirmation: 'any_password'
-  }
+const mockRequest = (): SignUpController.Request => ({
+  name: 'John Doe',
+  email: 'any_email@mail.com',
+  password: 'any_password',
+  passwordConfirmation: 'any_password'
 })
 
 type SutTypes = {
@@ -73,9 +71,9 @@ describe('SignUp Controller', () => {
     const { sut, validationStub } = makeSut()
 
     const validateSpy = jest.spyOn(validationStub, 'validate')
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(validateSpy).toHaveBeenCalledWith(request)
   })
 
   it('should call 400 if Validation returns an error', async () => {
