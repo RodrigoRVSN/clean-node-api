@@ -2,9 +2,14 @@ import { type SurveyModel } from '../models/survey'
 import { type AddSurveyParams } from '../usecases/survey/add-survey'
 
 export const mockSurveyModel = (): SurveyModel => ({
-  id: 'other_id',
+  id: 'any_id',
   question: 'any_question',
-  answers: [{ image: 'any_image', answer: 'any_answer' }],
+  answers: [{
+    answer: 'any_answer',
+    image: 'any_image'
+  }, {
+    answer: 'other_answer'
+  }],
   date: new Date()
 })
 
