@@ -1,7 +1,7 @@
 import { mockSurveyModel, mockSurveyModels } from '@/domain/_test'
 import { type AddSurvey, type AddSurveyParams } from '../controllers/survey/add-survey/add-survey-controller-protocols'
 import { type LoadSurveys, type SurveyModel } from '../controllers/survey/load-surveys/load-surveys-controller-protocols'
-import { type LoadSurveyById } from '../controllers/survey-result/save-survey-result/save-survey-result-protocols'
+import { type LoadSurveyById } from '../controllers/survey-result/save-survey-result/save-survey-result-controller-protocols'
 
 export const mockAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {

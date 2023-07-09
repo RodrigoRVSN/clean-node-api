@@ -1,7 +1,7 @@
 
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helpers'
-import { SaveSurveyResultController } from './save-survey-result'
-import { type LoadSurveyById, type HttpRequest, type SaveSurveyResult } from './save-survey-result-protocols'
+import { SaveSurveyResultController } from './save-survey-result-controller'
+import { type LoadSurveyById, type HttpRequest, type SaveSurveyResult } from './save-survey-result-controller-protocols'
 import { InvalidParamError, ServerError } from '@/presentation/errors'
 import MockDate from 'mockdate'
 import { mockSurveyResultModel } from '@/domain/_test'

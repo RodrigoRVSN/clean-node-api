@@ -1,5 +1,5 @@
 import { mockSurveyResultModel } from '@/domain/_test'
-import { type SaveSurveyResult, type SaveSurveyResultParams, type SurveyResultModel } from '../controllers/survey-result/save-survey-result/save-survey-result-protocols'
+import { type SaveSurveyResult, type SaveSurveyResultParams, type SurveyResultModel } from '../controllers/survey-result/save-survey-result/save-survey-result-controller-protocols'
 
 export const mockSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
