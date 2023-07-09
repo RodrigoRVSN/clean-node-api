@@ -1,8 +1,9 @@
-import { forbidden } from '@/presentation/helpers/http/http-helpers'
+import { forbidden, serverError } from '@/presentation/helpers/http/http-helpers'
 import { LoadSurveyResultController } from './load-survey-result-controller'
 import { type LoadSurveyById, type HttpRequest } from './load-survey-result-controller-protocols'
 import { mockLoadSurveyById } from '@/presentation/_test'
 import { InvalidParamError } from '@/presentation/errors'
+import { throwError } from '@/domain/_test/test-helper'
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
@@ -38,5 +39,13 @@ describe('LoadSurveyResult Controller', () => {
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
     const httpRequest = await sut.handle(makeFakeRequest())
     expect(httpRequest).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  it('should return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementation(throwError)
+    const httpRequest = await sut.handle(makeFakeRequest())
+    expect(httpRequest).toEqual(serverError(new Error()))
   })
 })
