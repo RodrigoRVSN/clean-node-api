@@ -1,9 +1,8 @@
-
 import { ObjectId, type Collection } from 'mongodb'
-import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 import { type SurveyModel } from '@/domain/models/survey'
 import { type AccountModel } from '@/domain/models/account'
+import { MongoHelper } from '../helpers'
 
 let surveyCollection: Collection
 let surveyResultCollection: Collection
@@ -21,7 +20,7 @@ const makeSurvey = async (): Promise<SurveyModel> => {
   }
   const { insertedId } = await surveyCollection.insertOne(data)
 
-  return { ...data, id: insertedId as any }
+  return { ...data, id: String(insertedId) }
 }
 
 const makeAccount = async (): Promise<AccountModel> => {
@@ -70,6 +69,8 @@ describe('Survey Result Mongo Repository', () => {
       expect(surveyResult.surveyId).toEqual(survey.id)
       expect(surveyResult.answers[0].count).toBe(1)
       expect(surveyResult.answers[0].percent).toBe(100)
+      expect(surveyResult.answers[1].count).toBe(0)
+      expect(surveyResult.answers[1].percent).toBe(0)
     })
   })
 
