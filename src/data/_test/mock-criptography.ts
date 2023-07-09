@@ -1,7 +1,4 @@
-import { type Decrypter } from '../protocols/criptography/decrypter'
-import { type Encrypter } from '../protocols/criptography/encrypter'
-import { type HashComparer } from '../protocols/criptography/hash-comparer'
-import { type Hasher } from '../protocols/criptography/hasher'
+import { type Decrypter, type Encrypter, type HashComparer, type Hasher } from '../protocols/criptography'
 
 export const makeDecrypter = (): Decrypter => {
   class DecrypterStub implements Decrypter {
